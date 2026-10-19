@@ -164,9 +164,10 @@ async function rollDice() {
     }
 
     const data = await response.json();
-    const match = data.text.match(/(⭕|❌|✨|💀|🌈)/);
-   console.log(data.text);
-result.textContent = match ? match[1] : '結果を取得できませんでした';
+    const matches = [...data.text.matchAll(/(⭕|❌|✨|💀|🌈)\s*\d*/g)];
+result.textContent = matches.length
+  ? matches.map(match => match[1]).join(' ')
+  : '結果を取得できませんでした';
   } catch (error) {
     result.textContent = 'ダイスを振れませんでした。通信環境を確認してください。';
     console.error(error);
