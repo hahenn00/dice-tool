@@ -141,8 +141,9 @@
   ダイスを振る
 </button>
 
+
 <script>
-async function rollDice() {
+function rollDice() {
   const diceType = document.querySelector('#dice-type').value;
   const diceCount = Number(document.querySelector('#dice-count').value);
   const result = document.querySelector('.result');
@@ -152,28 +153,57 @@ async function rollDice() {
     return;
   }
 
-  result.textContent = 'ダイスを振っています…';
+  const diceRules = {
+    NR6: [
+      [1, '💀'],
+      [4, '❌'],
+      [6, '⭕']
+    ],
+    NR8: [
+      [1, '💀'],
+      [4, '❌'],
+      [7, '⭕'],
+      [8, '✨']
+    ],
+    NR10: [
+      [1, '💀'],
+      [3, '❌'],
+      [8, '⭕'],
+      [10, '✨']
+    ],
+    NR12: [
+      [2, '💀'],
+      [4, '❌'],
+      [6, '⭕'],
+      [10, '✨'],
+      [12, '🌈']
+    ]
+  };
 
-  try {
-    const command = `${diceCount === 1 ? '' : diceCount}${diceType}`;
-    const url = `https://bcdice.onlinesession.app/v2/game_system/NRR/roll?command=${encodeURIComponent(command)}`;
-    const response = await fetch(url);
+  const rules = diceRules[diceType];
 
-    if (!response.ok) {
-      throw new Error('APIへの接続に失敗しました');
-    }
-
-    const data = await response.json();
-    const matches = [...data.text.matchAll(/(⭕|❌|✨|💀|🌈)\s*\d*/g)];
-result.textContent = matches.length
-  ? matches.map(match => match[1]).join(' ')
-  : '結果を取得できませんでした';
-  } catch (error) {
-    result.textContent = 'ダイスを振れませんでした。通信環境を確認してください。';
-    console.error(error);
+  if (!rules) {
+    result.textContent = 'ダイスの種類が正しくありません。';
+    return;
   }
+
+  const outcomes = [];
+
+  for (let i = 0; i < diceCount; i++) {
+    const roll = Math.floor(Math.random() * Number(diceType.slice(2))) + 1;
+    const outcome = rules.find(([max]) => roll <= max)[1];
+    outcomes.push(outcome);
+  }
+
+  const symbols = ['💀', '❌', '⭕', '✨', '🌈'];
+  const summary = symbols
+    .filter(symbol => outcomes.includes(symbol))
+    .map(symbol => `${symbol} ${outcomes.filter(x => x === symbol).length}`);
+
+  result.textContent = summary.join('、');
 }
 </script>
+
 
 
     <p class="note">画面プロトタイプ — ダイス処理は未実装</p>
