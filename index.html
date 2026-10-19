@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>nRR Dice</title>
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: #15151d;
+    color: #f4f0e8;
+    font-family: system-ui, sans-serif;
+  }
+
+  .app {
+    width: min(100%, 420px);
+    padding: 32px 24px;
+    border: 1px solid #41404e;
+    border-radius: 20px;
+    background: #22212d;
+    text-align: center;
+  }
+
+  .eyebrow {
+    color: #b9a6e8;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+  }
+
+  h1 {
+    margin: 10px 0 6px;
+    font-size: 32px;
+    letter-spacing: 0.08em;
+  }
+
+  .subtitle {
+    margin: 0;
+    color: #b9b5c5;
+    font-size: 14px;
+  }
+
+  .dice {
+    display: grid;
+    place-items: center;
+    width: 112px;
+    height: 112px;
+    margin: 32px auto 24px;
+    border: 1px solid #8f7bc2;
+    border-radius: 24px;
+    background: #302a42;
+    color: #e6d9ff;
+    font-size: 48px;
+  }
+
+  .result-label {
+    color: #b9b5c5;
+    font-size: 13px;
+  }
+
+  .result {
+    min-height: 40px;
+    margin: 8px 0 24px;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  button {
+    width: 100%;
+    padding: 15px;
+    border: 0;
+    border-radius: 12px;
+    background: #a993dc;
+    color: #201a2b;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  button:hover { background: #c0afea; }
+  button:focus-visible {
+    outline: 3px solid white;
+    outline-offset: 3px;
+  }
+
+  .note {
+    margin: 20px 0 0;
+    color: #9894a6;
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+  <main class="app">
+    <div class="eyebrow">TABLETOP TOOL</div>
+    <h1>nRR DICE</h1>
+    <p class="subtitle">ダイスロールツール</p>
+
+    <div class="dice" aria-hidden="true">?</div>
+
+    <div class="result-label">ROLL RESULT</div>
+    <div class="result" aria-live="polite">
+      ここに結果が表示されます
+    </div>
+
+    <button type="button"
+      onclick="document.querySelector('.result').textContent =
+      'ここにダイス結果を実装！'">
+      ダイスを振る
+    </button>
+
+    <p class="note">画面プロトタイプ — ダイス処理は未実装</p>
+  </main>
+</body>
+</html>
