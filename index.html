@@ -136,11 +136,42 @@
              min="1" max="100" value="1">
     </div>
    
-    <button type="button"
-      onclick="document.querySelector('.result').textContent =
-      'ここにダイス結果を実装！'">
-      ダイスを振る
-    </button>
+    
+<button type="button" onclick="rollDice()">
+  ダイスを振る
+</button>
+
+<script>
+async function rollDice() {
+  const diceType = document.querySelector('#dice-type').value;
+  const diceCount = Number(document.querySelector('#dice-count').value);
+  const result = document.querySelector('.result');
+
+  if (!Number.isInteger(diceCount) || diceCount < 1 || diceCount > 100) {
+    result.textContent = '個数は1〜100の整数で指定してください。';
+    return;
+  }
+
+  result.textContent = 'ダイスを振っています…';
+
+  try {
+    const command = `${diceCount === 1 ? '' : diceCount}${diceType}`;
+    const url = `https://bcdice.onlinesession.app/v2/game_system/NRR/roll?command=${encodeURIComponent(command)}`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error('APIへの接続に失敗しました');
+    }
+
+    const data = await response.json();
+    result.textContent = data.text;
+  } catch (error) {
+    result.textContent = 'ダイスを振れませんでした。通信環境を確認してください。';
+    console.error(error);
+  }
+}
+</script>
+
 
     <p class="note">画面プロトタイプ — ダイス処理は未実装</p>
   </main>
