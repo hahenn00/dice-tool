@@ -122,6 +122,20 @@
       ここに結果が表示されます
     </div>
 
+    <div class="dice-controls">
+      <label for="dice-type">ダイスの種類</label>
+      <select id="dice-type">
+        <option value="NR6">不利ダイス（6面）</option>
+        <option value="NR8" selected>ノーマルダイス（8面）</option>
+        <option value="NR10">有利ダイス（10面）</option>
+        <option value="NR12">Exダイス（12面）</option>
+      </select>
+
+      <label for="dice-count">個数</label>
+      <input id="dice-count" type="number"
+             min="1" max="100" value="1">
+    </div>
+   
     <button type="button"
       onclick="document.querySelector('.result').textContent =
       'ここにダイス結果を実装！'">
